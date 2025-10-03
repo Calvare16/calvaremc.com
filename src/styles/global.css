@@ -5,16 +5,16 @@
  */
 
 :root {
-	--accent: #2337ff;
-	--accent-dark: #000d8a;
-	--black: 15, 18, 25;
-	--gray: 96, 115, 159;
-	--gray-light: 229, 233, 240;
-	--gray-dark: 34, 41, 57;
-	--gray-gradient: rgba(var(--gray-light), 50%), #fff;
+	--accent: #6366f1;
+	--accent-dark: #4f46e5;
+	--black: 255, 255, 255;
+	--gray: 156, 163, 175;
+	--gray-light: 55, 65, 81;
+	--gray-dark: 229, 231, 235;
+	--gray-gradient: rgba(17, 24, 39, 50%), #0f172a;
 	--box-shadow:
-		0 2px 6px rgba(var(--gray), 25%), 0 8px 24px rgba(var(--gray), 33%), 0 16px 32px
-		rgba(var(--gray), 33%);
+		0 2px 6px rgba(0, 0, 0, 25%), 0 8px 24px rgba(0, 0, 0, 33%), 0 16px 32px
+		rgba(0, 0, 0, 33%);
 }
 @font-face {
 	font-family: "Atkinson";
@@ -37,6 +37,7 @@ body {
 	text-align: left;
 	background: linear-gradient(var(--gray-gradient)) no-repeat;
 	background-size: 100% 600px;
+	background-color: #0f172a;
 	word-wrap: break-word;
 	overflow-wrap: break-word;
 	color: rgb(var(--gray-dark));
@@ -109,10 +110,12 @@ code {
 	padding: 2px 5px;
 	background-color: rgb(var(--gray-light));
 	border-radius: 2px;
+	color: rgb(var(--gray-dark));
 }
 pre {
 	padding: 1.5em;
 	border-radius: 8px;
+	background-color: rgb(var(--gray-light));
 }
 pre > code {
 	all: unset;
