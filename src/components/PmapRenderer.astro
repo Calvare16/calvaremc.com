@@ -1,0 +1,49 @@
+---
+/**
+ * PmapRenderer - Renders .pmap content as HTML
+ */
+import type { PmapSection } from '../utils/pmap-parser';
+import { processInlineMarkup } from '../utils/pmap-parser';
+
+interface Props {
+  sections: PmapSection[];
+}
+
+const { sections } = Astro.props;
+---
+
+{sections.map((section) => {
+  switch (section.type) {
+    case 'heading':
+      const Tag = `h${section.level}` as any;
+      return <Tag set:html={processInlineMarkup(section.content)} />;
+    
+    case 'text':
+      return <p set:html={processInlineMarkup(section.content)} />;
+    
+    case 'list':
+      return (
+        <ul>
+          {section.items?.map((item) => (
+            <li set:html={processInlineMarkup(item)} />
+          ))}
+        </ul>
+      );
+    
+    case 'image':
+      return (
+        <div style="text-align: center; margin: 2em 0;">
+          <img
+            src={section.url}
+            alt={section.alt}
+            style={section.url?.includes('github') 
+              ? "border-radius: 50%; width: 150px; height: 150px; object-fit: cover; border: 4px solid var(--accent);"
+              : "max-width: 100%; height: auto; border-radius: 8px;"}
+          />
+        </div>
+      );
+    
+    default:
+      return null;
+  }
+})}

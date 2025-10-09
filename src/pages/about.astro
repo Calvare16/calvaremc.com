@@ -1,73 +1,28 @@
 ---
-import AboutHeroImage from '../assets/blog-placeholder-about.jpg';
-import Layout from '../layouts/BlogPost.astro';
+import BaseHead from '../components/BaseHead.astro';
+import Footer from '../components/Footer.astro';
+import Header from '../components/Header.astro';
+import PmapRenderer from '../components/PmapRenderer.astro';
+import { parsePmap } from '../utils/pmap-parser';
+import fs from 'fs';
+import path from 'path';
+
+// Read and parse the about.pmap file
+const pmapPath = path.join(process.cwd(), 'content', 'about.pmap');
+const pmapContent = fs.readFileSync(pmapPath, 'utf-8');
+const pageData = parsePmap(pmapContent);
 ---
 
-<Layout
-	title="About Calvare"
-	description="Learn more about Calvare - Minecraft content creator, YouTuber, and music maker"
-	pubDate={new Date('October 03 2025')}
-	heroImage={AboutHeroImage}
->
-	<div style="text-align: center; margin-bottom: 2em;">
-		<img
-			src="https://avatars.githubusercontent.com/u/170772155?v=4"
-			alt="Calvare profile picture"
-			style="border-radius: 50%; width: 150px; height: 150px; object-fit: cover; border: 4px solid var(--accent);"
-		/>
-	</div>
-
-	<p>
-		Hey! I'm Calvare, and I'm all about creating content that combines my biggest passions:
-		<strong>Minecraft</strong>, <strong>YouTube</strong>, <strong>music production</strong>, and <strong>creative coding</strong>.
-	</p>
-
-	<h2>The Minecraft Journey</h2>
-	<p>
-		My adventure in Minecraft started years ago, and it's been an incredible ride ever since. From
-		building massive survival bases to creating intricate redstone contraptions, I love pushing the
-		boundaries of what's possible in the blocky world. Whether it's survival gameplay, creative builds,
-		or technical projects, every video is a new opportunity to share something amazing with the community.
-	</p>
-
-	<h2>YouTube Channel: @calvare16</h2>
-	<p>
-		On my YouTube channel (<a href="https://youtube.com/@calvare16" target="_blank">@calvare16</a>),
-		I share Minecraft gameplay, tutorials, build showcases, and creative projects. The best part?
-		Hearing from viewers who've been inspired to start their own projects or try something new in
-		their own worlds. Every upload is a chance to connect with fellow gamers and share the joy of creation.
-	</p>
-
-	<h2>Music: Midnight Songs</h2>
-	<p>
-		When I'm not mining diamonds or recording videos, you'll find me making music under the name
-		<strong>Midnight Songs</strong>. On my <a href="https://soundcloud.com/midnightsongs" target="_blank">SoundCloud</a>,
-		I share original tracks and soundscapes—from ambient pieces perfect for building montages to upbeat tracks
-		for adventure content. Music adds another dimension to everything I create, and it's a passion that fuels
-		my creativity across all my projects.
-	</p>
-
-	<h2>Creative Coding on Scratch</h2>
-	<p>
-		I also love experimenting with game development and interactive projects on
-		<a href="https://scratch.mit.edu/users/Calvare" target="_blank">Scratch</a>. It's where I explore
-		coding concepts, create mini-games, and share interactive experiences with the community. Scratch has
-		been a fantastic platform for learning and teaching programming in a fun, visual way.
-	</p>
-
-	<h2>Why I Do This</h2>
-	<p>
-		Creating content isn't just a hobby—it's a way to connect with an amazing community of gamers,
-		builders, music lovers, and creators. Every like, comment, and share motivates me to keep creating
-		and improving. Whether you're here for Minecraft tips, music to vibe with, or coding inspiration,
-		I'm grateful you're part of this journey.
-	</p>
-
-	<p>
-		Thanks for checking out my site! Feel free to explore the blog, subscribe on
-		<a href="https://youtube.com/@calvare16" target="_blank">YouTube</a>, listen to my music on
-		<a href="https://soundcloud.com/midnightsongs" target="_blank">SoundCloud</a>, and check out my
-		<a href="https://scratch.mit.edu/users/Calvare" target="_blank">Scratch projects</a>. Let's keep
-		building, creating, and having fun together! 🎮🎵⛏️💻
-	</p>
-</Layout>
+<!doctype html>
+<html lang="en">
+	<head>
+		<BaseHead title={pageData.title || 'About'} description={pageData.description || ''} />
+	</head>
+	<body>
+		<Header />
+		<main>
+			<PmapRenderer sections={pageData.sections} />
+		</main>
+		<Footer />
+	</body>
+</html>
