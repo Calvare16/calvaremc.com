@@ -84,8 +84,8 @@ import HeaderLink from './HeaderLink.astro';
 		height: 4px;
 		background-color: var(--accent);
 		border-radius: 2px;
-		transition: left 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
-					width 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+		transition: left 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+					width 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 		z-index: 0;
 	}
 
@@ -120,6 +120,15 @@ import HeaderLink from './HeaderLink.astro';
 	// Update on window resize
 	window.addEventListener('resize', updateActiveIndicator);
 
-	// Update when navigation occurs
-	document.addEventListener('astro:after-swap', updateActiveIndicator);
+	// Update when navigation occurs (for Astro)
+	document.addEventListener('astro:after-swap', () => {
+		setTimeout(updateActiveIndicator, 0);
+	});
+
+	// Also listen for link clicks to update indicator immediately
+	document.querySelectorAll('.internal-links a').forEach(link => {
+		link.addEventListener('click', () => {
+			setTimeout(updateActiveIndicator, 0);
+		});
+	});
 </script>
