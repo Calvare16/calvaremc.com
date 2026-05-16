@@ -16,6 +16,50 @@
 		0 2px 6px rgba(0, 0, 0, 25%), 0 8px 24px rgba(0, 0, 0, 33%), 0 16px 32px
 		rgba(0, 0, 0, 33%);
 }
+
+/* Animation Keyframes */
+@keyframes fadeInDown {
+	from {
+		opacity: 0;
+		transform: translateY(-20px);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+@keyframes fadeInUp {
+	from {
+		opacity: 0;
+		transform: translateY(20px);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+@keyframes slideInLeft {
+	from {
+		opacity: 0;
+		transform: translateX(-30px);
+	}
+	to {
+		opacity: 1;
+		transform: translateX(0);
+	}
+}
+
+@keyframes fadeIn {
+	from {
+		opacity: 0;
+	}
+	to {
+		opacity: 1;
+	}
+}
+
 @font-face {
 	font-family: "Mojangles";
 	src: url("/fonts/mojangles.otf.woff2") format("woff2");
@@ -59,6 +103,7 @@ h6 {
 	margin: 0 0 0.5rem 0;
 	color: rgb(var(--black));
 	line-height: 1.2;
+	animation: fadeInDown 0.6s ease-out;
 }
 h1 {
 	font-size: 3.052em;
@@ -81,15 +126,18 @@ b {
 }
 a {
 	color: var(--accent);
+	transition: color 0.3s ease;
 }
 a:hover {
-	color: var(--accent);
+	color: var(--accent-dark);
 }
 p {
 	margin-bottom: 1em;
+	animation: fadeInUp 0.6s ease-out;
 }
 .prose p {
 	margin-bottom: 2em;
+	animation: fadeInUp 0.6s ease-out;
 }
 textarea {
 	width: 100%;
@@ -100,22 +148,26 @@ input {
 }
 table {
 	width: 100%;
+	animation: fadeInUp 0.6s ease-out;
 }
 img {
 	max-width: 100%;
 	height: auto;
 	border-radius: 8px;
+	animation: fadeInUp 0.7s ease-out;
 }
 code {
 	padding: 2px 5px;
 	background-color: rgb(var(--gray-light));
 	border-radius: 2px;
 	color: rgb(var(--gray-dark));
+	animation: fadeIn 0.5s ease-out;
 }
 pre {
 	padding: 1.5em;
 	border-radius: 8px;
 	background-color: rgb(var(--gray-light));
+	animation: fadeInUp 0.7s ease-out;
 }
 pre > code {
 	all: unset;
@@ -125,10 +177,12 @@ blockquote {
 	padding: 0 0 0 20px;
 	margin: 0px;
 	font-size: 1.333em;
+	animation: slideInLeft 0.6s ease-out;
 }
 hr {
 	border: none;
 	border-top: 1px solid rgb(var(--gray-light));
+	animation: fadeIn 0.5s ease-out;
 }
 @media (max-width: 720px) {
 	body {
