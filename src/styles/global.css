@@ -17,21 +17,21 @@
 		rgba(0, 0, 0, 33%);
 }
 @font-face {
-	font-family: "Atkinson";
-	src: url("/fonts/atkinson-regular.woff") format("woff");
+	font-family: "Mojangles";
+	src: url("/fonts/mojangles.otf.woff2") format("woff2");
 	font-weight: 400;
 	font-style: normal;
 	font-display: swap;
 }
 @font-face {
-	font-family: "Atkinson";
-	src: url("/fonts/atkinson-bold.woff") format("woff");
+	font-family: "Mojangles";
+	src: url("/fonts/mojangles-bold.otf.woff2") format("woff2");
 	font-weight: 700;
 	font-style: normal;
 	font-display: swap;
 }
 body {
-	font-family: "Atkinson", sans-serif;
+	font-family: "Mojangles", sans-serif;
 	margin: 0;
 	padding: 0;
 	text-align: left;
