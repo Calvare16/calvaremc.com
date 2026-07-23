@@ -138,12 +138,11 @@ import HeaderLink from './HeaderLink.astro';
 	}
 
 	function animateIndicatorToCurrentPage() {
-		const internalLinks = document.querySelector('.internal-links') as HTMLElement | null;
 		const links = Array.from(document.querySelectorAll('.internal-links a')) as HTMLElement[];
 		const activeLink = links.find((link) => link.classList.contains('active'));
 		const oppositeLink = links.find((link) => link !== activeLink);
 
-		if (!activeLink || !internalLinks || !oppositeLink) {
+		if (!activeLink || !oppositeLink) {
 			return;
 		}
 
@@ -168,11 +167,5 @@ import HeaderLink from './HeaderLink.astro';
 
 	document.addEventListener('astro:after-swap', () => {
 		setTimeout(animateIndicatorToCurrentPage, 10);
-	});
-
-	document.querySelectorAll('.internal-links a').forEach((link) => {
-		link.addEventListener('click', () => {
-			setTimeout(animateIndicatorToCurrentPage, 10);
-		});
 	});
 </script>
