@@ -12,14 +12,16 @@ interface Props {
 const { sections } = Astro.props;
 ---
 
-{sections.map((section) => {
+{sections.map((section, index) => {
+  const revealDelay = `${index * 0.08}s`;
+
   switch (section.type) {
     case 'heading':
       const Tag = `h${section.level}` as any;
-      return <Tag set:html={processInlineMarkup(section.content)} />;
+      return <Tag style={`--delay: ${revealDelay};`} set:html={processInlineMarkup(section.content)} />;
     
     case 'text':
-      return <p set:html={processInlineMarkup(section.content)} />;
+      return <p style={`--delay: ${revealDelay};`} set:html={processInlineMarkup(section.content)} />;
     
     case 'list':
       return (

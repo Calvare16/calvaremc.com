@@ -1,11 +1,13 @@
 ---
-import { SITE_TITLE } from '../consts';
+import CalvareLogo from '../assets/CalvareLogo.png';
 import HeaderLink from './HeaderLink.astro';
 ---
 
 <header>
 	<nav>
-		<h2><a href="/">{SITE_TITLE}</a></h2>
+		<h2><a href="/" aria-label="Go to the home page">
+			<img src={CalvareLogo.src} alt="Calvare logo" width="120" height="36" />
+		</a></h2>
 		<div class="internal-links">
 			<HeaderLink href="/">Home</HeaderLink>
 			<HeaderLink href="/about">About</HeaderLink>
@@ -39,7 +41,7 @@ import HeaderLink from './HeaderLink.astro';
 	header {
 		margin: 0;
 		padding: 0 1em;
-		background: #1e293b;
+		background: #0a3b39;
 		box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
 	}
 	h2 {
@@ -51,6 +53,14 @@ import HeaderLink from './HeaderLink.astro';
 	h2 a,
 	h2 a.active {
 		text-decoration: none;
+	}
+
+	h2 img {
+		display: block;
+		height: 36px;
+		width: auto;
+		max-width: 140px;
+		object-fit: contain;
 	}
 	nav {
 		display: flex;
@@ -102,34 +112,70 @@ import HeaderLink from './HeaderLink.astro';
 </style>
 
 <script>
-	function updateActiveIndicator() {
-		const activeLink = document.querySelector('.internal-links a.active');
+	function getIndicatorCoordinates(link: HTMLElement, container: HTMLElement) {
+		const linkRect = link.getBoundingClientRect();
+		const containerRect = container.getBoundingClientRect();
+		return {
+			left: linkRect.left - containerRect.left,
+			width: linkRect.width,
+		};
+	}
+
+	function animateIndicatorToCurrentPage() {
+		const activeLink = document.querySelector('.internal-links a.active') as HTMLElement | null;
 		const indicator = document.getElementById('activeIndicator');
-		
-		if (activeLink && indicator) {
-			const linkRect = activeLink.getBoundingClientRect();
-			const containerRect = (activeLink.parentElement as HTMLElement).getBoundingClientRect();
-			
-			indicator.style.left = (linkRect.left - containerRect.left) + 'px';
-			indicator.style.width = linkRect.width + 'px';
+		const internalLinks = document.querySelector('.internal-links') as HTMLElement | null;
+
+		if (!activeLink || !indicator || !internalLinks) {
+			return;
+		}
+
+		const otherLink = Array.from(internalLinks.querySelectorAll('a')).find(
+			(link) => !link.classList.contains('active')
+		) as HTMLElement | undefined;
+
+		const activeCoordinates = getIndicatorCoordinates(activeLink, internalLinks);
+		const indicatorTransition = 'left 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94), width 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+
+		indicator.style.transition = 'none';
+		if (otherLink) {
+			const otherCoordinates = getIndicatorCoordinates(otherLink, internalLinks);
+			indicator.style.left = otherCoordinates.left + 'px';
+			indicator.style.width = otherCoordinates.width + 'px';
+		}
+
+		requestAnimationFrame(() => {
+			indicator.style.transition = indicatorTransition;
+			indicator.style.left = activeCoordinates.left + 'px';
+			indicator.style.width = activeCoordinates.width + 'px';
+		});
+	}
+
+	function updateActiveIndicator() {
+		const activeLink = document.querySelector('.internal-links a.active') as HTMLElement | null;
+		const indicator = document.getElementById('activeIndicator');
+		const internalLinks = document.querySelector('.internal-links') as HTMLElement | null;
+
+		if (activeLink && indicator && internalLinks) {
+			const coordinates = getIndicatorCoordinates(activeLink, internalLinks);
+			indicator.style.left = coordinates.left + 'px';
+			indicator.style.width = coordinates.width + 'px';
 		}
 	}
 
-	// Update on page load
-	updateActiveIndicator();
-
-	// Update on window resize
-	window.addEventListener('resize', updateActiveIndicator);
-
-	// Update when navigation occurs (for Astro)
-	document.addEventListener('astro:after-swap', () => {
-		setTimeout(updateActiveIndicator, 0);
+	window.addEventListener('load', () => {
+		setTimeout(animateIndicatorToCurrentPage, 10);
 	});
 
-	// Also listen for link clicks to update indicator immediately
-	document.querySelectorAll('.internal-links a').forEach(link => {
+	window.addEventListener('resize', updateActiveIndicator);
+
+	document.addEventListener('astro:after-swap', () => {
+		setTimeout(animateIndicatorToCurrentPage, 10);
+	});
+
+	document.querySelectorAll('.internal-links a').forEach((link) => {
 		link.addEventListener('click', () => {
-			setTimeout(updateActiveIndicator, 0);
+			setTimeout(animateIndicatorToCurrentPage, 10);
 		});
 	});
 </script>

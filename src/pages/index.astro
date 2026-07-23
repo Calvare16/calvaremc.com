@@ -4,6 +4,7 @@ import Footer from '../components/Footer.astro';
 import Header from '../components/Header.astro';
 import PmapRenderer from '../components/PmapRenderer.astro';
 import { parsePmap } from '../utils/pmap-parser';
+import costume3 from '../assets/costume3.png';
 import fs from 'fs';
 import path from 'path';
 
@@ -22,7 +23,43 @@ const pageData = parsePmap(pmapContent);
 		<Header />
 		<main>
 			<PmapRenderer sections={pageData.sections} />
+			<div class="home-shot-link">
+				<a href="https://calvaremc.com/SPACESHOOT.html" target="_blank" rel="noreferrer" aria-label="Open SPACESHOOT">
+					<img src={costume3.src} alt="SPACESHOOT icon" width="24" height="24" />
+				</a>
+			</div>
 		</main>
 		<Footer />
 	</body>
 </html>
+
+<style>
+	.home-shot-link {
+		display: flex;
+		justify-content: center;
+		padding: 1rem 0 1.5rem;
+	}
+
+	.home-shot-link a {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		width: 28px;
+		height: 28px;
+		border-radius: 999px;
+		background: rgba(45, 212, 191, 0.14);
+		transition: transform 0.2s ease, background 0.2s ease;
+	}
+
+	.home-shot-link a:hover {
+		transform: scale(1.08);
+		background: rgba(45, 212, 191, 0.24);
+	}
+
+	.home-shot-link img {
+		display: block;
+		width: 24px;
+		height: 24px;
+		object-fit: contain;
+	}
+</style>
