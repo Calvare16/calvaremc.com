@@ -20,9 +20,37 @@ const pageData = parsePmap(pmapContent);
 	</head>
 	<body>
 		<Header />
-		<main>
+		<main class="about-page">
 			<PmapRenderer sections={pageData.sections} />
 		</main>
 		<Footer />
 	</body>
 </html>
+
+<style>
+	.about-page {
+		text-align: center;
+	}
+
+	.about-page :global(h1),
+	.about-page :global(h2),
+	.about-page :global(h3),
+	.about-page :global(h4),
+	.about-page :global(h5),
+	.about-page :global(h6),
+	.about-page :global(p),
+	.about-page :global(li) {
+		margin-left: auto;
+		margin-right: auto;
+	}
+
+	.about-page :global(ul) {
+		list-style: none;
+		padding: 0;
+		margin: 0 auto 1.5em;
+	}
+
+	.about-page :global(li) {
+		margin-bottom: 0.35em;
+	}
+</style>
